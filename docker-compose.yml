@@ -26,9 +26,20 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5435:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      
+  python-backend:
+    build:
+      context: ./python-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      PYTHON_ENV: ${PYTHON_ENV}
+    depends_on:
+      - db
 
 volumes:
   pgdata:
